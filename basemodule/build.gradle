@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+
+def cfg = rootProject.ext.android
+
+
+android {
+
+
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+
+
+    defaultConfig {
+
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode//更新次数
+        versionName cfg.versionName//版本号
+
+        if (isDebug.toBoolean()) {
+            //debug模式
+            buildConfigField "String", "AlphaUrl", "\"${url["debug"]}\""
+
+        } else {
+            //release模式
+            buildConfigField "String", "AlphaUrl", "\"${url["release"]}\""
+
+        }
+
+    }
+
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile project(':librarymodule')
+}
